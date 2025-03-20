@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900">
+    <div class="min-h-screen flex">
+      <!-- Menu lateral -->
+      <header class="flex flex-col items-center justify-between bg-gray-950 min-h-screen w-64 text-slate-950 fixed top-0 left-0 p-6">
+        <img class="w-20" src="https://logosandtypes.com/wp-content/uploads/2020/08/stock-x.svg"/>
+
+
+        <ul class="text-gray-200 font-sans text-lg flex flex-col gap-8" >
+            <li class="mb-4"><a href="{% url 'criar_produto' %}" class="hover:text-violet-300">Cadastrar Produtos</a></li>
+            <li class="mb-4"><a href="{% url 'criar_marca' %}" class="hover:text-violet-300">Cadastrar Marca</a></li>
+            <li class="mb-4"><a href="{% url 'index' %}" class="hover:text-violet-300">Listar Produtos</a></li>
+            <li class="mb-4"><a href="{% url 'marcas' %}" class="hover:text-violet-300">Listar Marcas</a></li>
+          </ul>
+
+        <a class="w-full bg-red-700 text-white px-8 py-4 text-lg text-center rounded-lg">Sair</a>
+      </header>
+
+
+      <!-- Conteúdo principal -->
+      <main class="ml-64 flex-1">
+        <h1 class="bg-gray-950 px-8 py-4 w-full fixed left-70 text-xl font-bold mb-6 text-gray-200">Marcas</h1>
+
+        <div class="mt-12 w-full container mx-auto h-screen content-center">
+
+
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Nome da marca
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Editar
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Deletar
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for marca in marcas %}
+                            <tr>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{marca.nome}}
+                                </th>
+
+                                <td class="px-6 py-4">
+                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Deletar</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+        
+      </main>
+    </div>
+  </body>
+</html>
+

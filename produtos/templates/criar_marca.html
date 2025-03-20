@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900">
+    <div class="min-h-screen flex">
+      <!-- Menu lateral -->
+      <header class="flex flex-col items-center justify-between bg-gray-950 min-h-screen w-64 text-slate-950 fixed top-0 left-0 p-6">
+        <img class="w-20" src="https://logosandtypes.com/wp-content/uploads/2020/08/stock-x.svg"/>
+
+
+        <ul class="text-gray-200 font-sans text-lg flex flex-col gap-8" >
+            <li class="mb-4"><a href="{% url 'criar_produto' %}" class="hover:text-violet-300">Cadastrar Produtos</a></li>
+            <li class="mb-4"><a href="{% url 'criar_marca' %}" class="hover:text-violet-300">Cadastrar Marca</a></li>
+            <li class="mb-4"><a href="{% url 'index' %}" class="hover:text-violet-300">Listar Produtos</a></li>
+            <li class="mb-4"><a href="{% url 'marcas' %}" class="hover:text-violet-300">Listar Marcas</a></li>
+          </ul>
+        <a class="w-full bg-red-700 text-white px-8 py-4 text-lg text-center rounded-lg">Sair</a>
+      </header>
+
+
+
+      <!-- Conteúdo principal -->
+      <main class="ml-64 flex-1">
+        <h1 class="bg-gray-950 px-8 py-4 w-full fixed left-70 text-xl font-bold mb-6 text-gray-200">Criar Marca</h1>
+
+        <div class="mt-12 h-screen container flex justify-center items-center">
+            <form class="bg-gray-950/30 rounded-xl w-[800px] py-12 px-8" action="{% url 'criar_marca' %}" method="POST"> {% csrf_token %}
+                <div class="grid gap-4 mb-12">
+                    <label class="text-gray-200 justify-self-start text-lg" for="nome">Nome da marca</label>
+                    <input class="bg-gray-700 text-white rounded-lg py-3 px-4" id="nome" name="nome" type="text"></input>
+                </div>
+
+
+                <input class="w-full bg-green-600 rounded-md text-center text-lg text-gray-900 px-8 p-4" value="Cadastrar" type="submit"></input>
+            </form> 
+        </div>
+        
+      </main>
+    </div>
+  </body>
+</html>
+
