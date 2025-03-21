@@ -28,7 +28,7 @@
         <h1 class="bg-gray-950 px-8 py-4 w-full fixed left-70 text-xl font-bold mb-6 text-gray-200">Criar Produtos</h1>
 
         <div class="mt-12 h-screen container flex justify-center items-center">
-            <form class="bg-gray-950/30 rounded-xl w-[800px] py-12 px-8" action="{% url 'criar_produto' %}" method="POST"> {% csrf_token %}
+            <form class="bg-gray-950/30 rounded-xl min-w-[800px] py-12 px-8" action="{% url 'criar_produto' %}" method="POST"> {% csrf_token %}
                 <div class="grid gap-4 mb-12">
                     <label class="text-gray-200 justify-self-start text-lg" for="nome">Nome</label>
                     <input class="bg-gray-700 text-white rounded-lg py-3 px-4" id="nome" name="nome" type="text"></input>
@@ -37,19 +37,19 @@
                 <div class="grid gap-4 mb-12">
                     <label class="text-gray-200 justify-self-start text-lg" for="tipo">Tipo</label>
                     <select class="bg-gray-700 text-white py-3 px-4 rounded-lg" id="tipo" name="tipo" >
-                        <option value="dog">Notebook</option>
-                        <option value="cat">Switch</option>
+                        {% for tipo in tipos %}
+                          <option value="{{tipo.nome}}">{{tipo.nome}}</option>
+                        {% endfor %}
                       </select>
                 </div>
 
-                <div class="grid gap-4 mb-12">
-                    <label class="text-gray-200 justify-self-start text-lg" for="marca">Marca</label>
-                    <select class="bg-gray-700 text-white py-3 px-4 rounded-lg" name="marca" id="marca">
-                        {% for marca in marcas %}
-                            <option value="{{marca}}">{{marca}}</option>
-                        
-                        {% endfor %}
-                      </select>
+                <div class="w-full grid gap-4 mb-12">
+                  <label class="text-gray-200 justify-self-start text-lg" for="marca">Marca</label>
+                  <select class="bg-gray-700 text-white py-3 px-4 rounded-lg" id="marca" name="marca" >
+                      {% for marca in marcas %}
+                        <option value="{{marca.nome}}">{{marca.nome}}</option>
+                      {% endfor %}
+                    </select>
                 </div>
 
                 <div class="grid gap-4 mb-12">

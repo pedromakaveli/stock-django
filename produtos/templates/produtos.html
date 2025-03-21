@@ -31,8 +31,8 @@
 
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-950">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 Nome do Produto
@@ -62,25 +62,38 @@
                     <tbody>
 
                         {% for produto in produtos %}
-                            <tr>
+                            <tr class="bg-gray-950">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{produto.nome}}
+                                    <form action="{% url 'atualizar_produto' produto.id %}" method="POST"> {%csrf_token%}
+                                    <input class="w-64 px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="nome" type="text" value="{{produto.nome}}"></input>
                                 </th>
 
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{produto.marca}}
+                                  <select class="px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="marca">
+                                    {% for marca in marcas %}
+                                      <option value="{{ marca.nome }}" {% if marca == produto.marca %}selected{% endif %}>
+                                        {{ marca.nome }}
+                                      </option>
+                                    {% endfor %}
+                                  </select>
+                                </th>
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                  <select class="w-64 px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white"  name="tipo" >
+                                    {% for tipo in tipos %}
+                                    <option value="{{ tipo.nome }}" {% if tipo.nome == produto.tipo %}selected{% endif %}>{{tipo.nome}}</option>
+                                    {% endfor %}
+                                  </select>
                                 </th>
 
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    função nao feita
+                                    <input class="w-64 px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="quantidade" type="text" value="{{produto.quantidade}}"></input>
                                 </th>
 
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{produto.quantidade}}
-                                </th>
 
                                 <td class="px-6 py-4">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                                    <input type="submit" value="Editar" class="bg-yellow-600 px-8 py-4 text-white rounded-lg"></input>
+                                </form>
+
                                 </td>
                                 <td class="px-6 py-4">
                                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Deletar</a>

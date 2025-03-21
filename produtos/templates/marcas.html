@@ -30,13 +30,15 @@
         <div class="mt-12 w-full container mx-auto h-screen content-center">
 
 
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="relative overflow-x-auto sm:rounded-lg flex justify-center">
+                <table class="w-[50vw] text-sm text-left rtl:text-right text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-950">
                         <tr>
+
                             <th scope="col" class="px-6 py-3">
-                                Nome da marca
+                                Marca
                             </th>
+
                             <th scope="col" class="px-6 py-3">
                                 Editar
                             </th>
@@ -49,16 +51,20 @@
                     <tbody>
 
                         {% for marca in marcas %}
-                            <tr>
+                            <tr class="bg-gray-950">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{marca.nome}}
+                                    <form action="{% url 'atualizar_marca' marca.id %}" method="POST"> {%csrf_token%}
+                                    <input class="w-[500px] px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="nome" type="text" value="{{marca.nome}}"></input>
                                 </th>
 
                                 <td class="px-6 py-4">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
+                                    <input type="submit" value="Editar" class="bg-yellow-600 px-8 py-4 text-white rounded-lg"></input>
+                                </form>
+
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Deletar</a>
+                                    
+                                    <a href="{% url 'deletar_marca' marca.id  %}" class="bg-red-600 px-8 py-4 text-white rounded-lg">Deletar</a>
                                 </td>
                             </tr>
                         {% endfor %}
