@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from produtos import urls
 # Create your views here.
 
-def login (request):
+def logout_view (request):
+    logout(request)
+    
+    return redirect("login")
+
+def login_page (request):
     if request.method == "GET":
         return render(request, "login.html")
     
@@ -17,7 +22,7 @@ def login (request):
         
         print(email, senha)
         if user is not None:
-
+            login(request, user)
             return redirect("index")
         else:
             messages.error(request, "Credenciais inválidas ou usuário não existe.")

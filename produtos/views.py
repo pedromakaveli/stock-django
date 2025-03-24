@@ -1,24 +1,32 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from produtos.models import Marca
 from produtos.models import Produto
 from produtos.models import Tipo
 
 # Create your views here.
 
+@login_required(login_url="login")
 def index (request):
     
     produtos = Produto.objects.all()
     marcas = Marca.objects.all()
     tipos = Tipo.objects.all()
     
+    usuario = request.POST.get("email")
+    print(usuario)
+    
     return render(request, "produtos.html", {"produtos": produtos, "marcas": marcas, "tipos": tipos})
 
+@login_required(login_url="login")
 def marcas (request):
     marcas = Marca.objects.all()
     
     return render(request, "marcas.html", {"marcas": marcas})
 
+@login_required(login_url="login")
 def deletar_marca (request, id):
     print(id)
     marca = Marca.objects.get(id=id)
@@ -26,11 +34,13 @@ def deletar_marca (request, id):
     
     return redirect("marcas")
 
+@login_required(login_url="login")
 def categorias (request):
     tipos = Tipo.objects.all()
     
     return render(request, "categorias.html", {"tipos": tipos})
 
+@login_required(login_url="login")
 def atualizar_tipo (request, id):
     
     nome = request.POST.get("tipo")
@@ -41,6 +51,7 @@ def atualizar_tipo (request, id):
     
     return redirect ('categorias')
 
+@login_required(login_url="login")
 def deletar_tipo(request, id):
     print(id)
     tipo = Tipo.objects.get(id=id)
@@ -48,7 +59,7 @@ def deletar_tipo(request, id):
     
     return redirect("categorias")
 
-
+@login_required(login_url="login")
 def criar_tipo (request):
     nome_tipo = request.POST.get("tipo")
 
@@ -62,7 +73,8 @@ def criar_tipo (request):
         
     if request.method == "GET":
         return render(request, "criar_tipo.html")
-
+    
+@login_required(login_url="login")
 def criar_marca (request):
     
     nome = request.POST.get("nome")
@@ -77,7 +89,7 @@ def criar_marca (request):
     
         return render(request, "criar_marca.html")
 
-
+@login_required(login_url="login")
 def atualizar_marca (request, id):
     nome = request.POST.get("nome")
     marca = Marca.objects.get(id=id)
@@ -87,7 +99,7 @@ def atualizar_marca (request, id):
     
     return redirect ('marcas')
   
-
+@login_required(login_url="login")
 def atualizar_produto (request, id):
     nome = request.POST.get("nome")
     quantidade = request.POST.get("quantidade")
@@ -106,6 +118,7 @@ def atualizar_produto (request, id):
     
     return redirect("index")
 
+@login_required(login_url="login")
 def criar_produto (request):
     if request.method == "GET":
         marcas = Marca.objects.all()
