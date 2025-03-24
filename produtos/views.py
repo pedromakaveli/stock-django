@@ -26,6 +26,29 @@ def deletar_marca (request, id):
     
     return redirect("marcas")
 
+def categorias (request):
+    tipos = Tipo.objects.all()
+    
+    return render(request, "categorias.html", {"tipos": tipos})
+
+def atualizar_tipo (request, id):
+    
+    nome = request.POST.get("tipo")
+    tipo = Tipo.objects.get(id=id)
+    tipo.nome = nome
+    
+    tipo.save()
+    
+    return redirect ('categorias')
+
+def deletar_tipo(request, id):
+    print(id)
+    tipo = Tipo.objects.get(id=id)
+    tipo.delete()
+    
+    return redirect("categorias")
+
+
 def criar_tipo (request):
     nome_tipo = request.POST.get("tipo")
 
@@ -33,7 +56,9 @@ def criar_tipo (request):
         tipo = Tipo(nome=nome_tipo)
         tipo.save()
         
-        return redirect("criar_tipo")
+
+        return redirect("categorias")
+
         
     if request.method == "GET":
         return render(request, "criar_tipo.html")

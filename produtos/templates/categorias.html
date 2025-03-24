@@ -45,32 +45,30 @@
         <a class="align-self-end w-full bg-red-700 text-white px-8 py-4 text-lg text-center rounded-lg">Sair</a>
       </header>
 
-
       <!-- Conteúdo principal -->
       <main class="ml-64 flex-1">
-        <h1 class="bg-gray-950 px-8 py-4 w-full fixed left-70 text-xl font-bold mb-6 text-gray-200">Produtos</h1>
+        
 
-        <div class="mt-12 w-full container mx-auto h-screen content-center">
+        <div class="mt-12 w-full container mx-auto min-h-screen items-center content-center">
 
 
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+            <div class="relative overflow-x-auto sm:rounded-lg flex flex-col items-center gap-20">
+                <form class="bg-gray-950/30 rounded-xl w-[50vw] py-12 px-8" action="{% url 'criar_tipo' %}" method="POST"> {% csrf_token %}
+                    <div class="grid gap-4 mb-12">
+                        <label class="text-gray-200 justify-self-start text-lg" for="tipo">Novo tipo</label>
+                        <input class="bg-gray-700 text-white rounded-lg py-3 px-4" id="tipo" name="tipo" type="text"></input>
+                    </div>
+    
+    
+                    <input class="w-full bg-green-600 rounded-md text-center text-lg text-gray-900 px-8 p-4" value="Cadastrar" type="submit"></input>
+                </form> 
+
+                <table class="w-[50vw] text-sm text-left rtl:text-right text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-950">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Nome do Produto
-                            </th>
 
                             <th scope="col" class="px-6 py-3">
-                                Marca
-                            </th>
-
-                            <th scope="col" class="px-6 py-3">
-                                Tipo
-                            </th>
-
-                            <th scope="col" class="px-6 py-3">
-                                Quantidade
+                                Categoria
                             </th>
 
                             <th scope="col" class="px-6 py-3">
@@ -84,34 +82,12 @@
                     </thead>
                     <tbody>
 
-                        {% for produto in produtos %}
+                        {% for tipo in tipos %}
                             <tr class="bg-gray-950">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <form action="{% url 'atualizar_produto' produto.id %}" method="POST"> {%csrf_token%}
-                                    <input class="w-64 px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="nome" type="text" value="{{produto.nome}}"></input>
+                                    <form action="{% url 'atualizar_tipo' tipo.id %}" method="POST"> {%csrf_token%}
+                                    <input class="w-[500px] px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="tipo" type="text" value="{{tipo.nome}}"></input>
                                 </th>
-
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                  <select class="px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="marca">
-                                    {% for marca in marcas %}
-                                      <option value="{{ marca.nome }}" {% if marca == produto.marca %}selected{% endif %}>
-                                        {{ marca.nome }}
-                                      </option>
-                                    {% endfor %}
-                                  </select>
-                                </th>
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                  <select class="w-64 px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white"  name="tipo" >
-                                    {% for tipo in tipos %}
-                                    <option value="{{ tipo.nome }}" {% if tipo.nome == produto.tipo %}selected{% endif %}>{{tipo.nome}}</option>
-                                    {% endfor %}
-                                  </select>
-                                </th>
-
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <input class="w-64 px-6 py-4 bg-gray-900 rounded-xl font-medium text-gray-900 whitespace-nowrap dark:text-white" name="quantidade" type="text" value="{{produto.quantidade}}"></input>
-                                </th>
-
 
                                 <td class="px-6 py-4">
                                     <input type="submit" value="Editar" class="bg-yellow-600 px-8 py-4 text-white rounded-lg"></input>
@@ -119,7 +95,8 @@
 
                                 </td>
                                 <td class="px-6 py-4">
-                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Deletar</a>
+                                    
+                                    <a href="{% url 'deletar_tipo' tipo.id  %}" class="bg-red-600 px-8 py-4 text-white rounded-lg">Deletar</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -132,7 +109,6 @@
       </main>
     </div>
   </body>
-
   <script>
     const dropdown_list = document.querySelectorAll("#dropdown_list li.dropdown-btn");
     const dropdown_list_span = document.querySelectorAll("#dropdown_list span");
