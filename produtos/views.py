@@ -8,6 +8,19 @@ from produtos.models import Tipo
 
 # Create your views here.
 
+@login_required(login_url="dashboard")
+def dashboard (request):
+    qtd_produtos = len(Produto.objects.all())
+    qtd_marcas = len(Marca.objects.all())
+    qtd_categorias = len(Tipo.objects.all())
+    
+    return render(request, "home.html", {
+        "qtd_produtos": qtd_produtos, 
+        "qtd_marcas": qtd_marcas,
+        "qtd_categorias": qtd_categorias
+        
+        } )
+
 @login_required(login_url="login")
 def index (request):
     
